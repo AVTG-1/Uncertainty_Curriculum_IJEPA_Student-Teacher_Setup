@@ -1,0 +1,2 @@
+CUDA_VISIBLE_DEVICES=6 PYTHONPATH=. python src/train_student_uncertainty_curriculum.py --config configs/cifar10_vit_small_ep_n_student.yaml --device cuda:0 2>&1
+

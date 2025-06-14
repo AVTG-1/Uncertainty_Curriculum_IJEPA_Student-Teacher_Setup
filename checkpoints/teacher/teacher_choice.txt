@@ -1,0 +1,2 @@
+The ijepa_ep30.pth has been chosen as the final_teacher (the file final_teacher is a copy of it)
+The choice is based on the testing of the checkpoints with a linear classifier

@@ -1,0 +1,2 @@
+time CUDA_VISIBLE_DEVICES=0 PYTHONPATH=. python src/train.py --config configs/cifar10_vit_small_ep_n.yaml --device cuda:0
+time CUDA_VISIBLE_DEVICES=0 PYTHONPATH=. python src/train.py --config configs/cifar10_vit_small_ep_n.yaml --device cuda:0 | tee /path/to/text_file.txt

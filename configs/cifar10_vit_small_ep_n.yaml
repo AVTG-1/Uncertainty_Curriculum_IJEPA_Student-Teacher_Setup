@@ -1,0 +1,43 @@
+data:
+  dataset: cifar10
+  root_path: cifar-10
+  batch_size: 128
+  num_workers: 4
+  pin_mem: true
+  crop_size: 32
+  crop_scale: [0.3, 1.0]
+  use_horizontal_flip: true
+  use_color_distortion: true
+  color_jitter_strength: 0.5
+  use_gaussian_blur: false
+
+mask:
+  patch_size: 4
+  # random mask doesn't need enc/pred scale or aspect
+  ratio: [0.4, 0.6]
+
+meta:
+  model_name: vit_small
+  pred_depth: 6
+  pred_emb_dim: 192
+  use_bfloat16: false
+  load_checkpoint: false
+  copy_data: false
+  read_checkpoint: null
+
+optimization:
+  epochs: 50
+  start_lr: 0.0005
+  lr: 0.001
+  final_lr: 0.000001
+  warmup: 10
+  weight_decay: 0.02
+  final_weight_decay: 0.02
+  ema: [0.99, 1.0]
+  ipe_scale: 1.0
+
+logging:
+  folder: ./logs/cifar10_vitsmall/
+  write_tag: jepa
+  log_freq: 16
+  checkpoint_freq: 5

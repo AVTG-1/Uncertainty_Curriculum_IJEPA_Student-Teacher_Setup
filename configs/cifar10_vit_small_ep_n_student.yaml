@@ -1,0 +1,59 @@
+data:
+  dataset: cifar10
+  root_path: cifar-10
+  batch_size: 512
+  num_workers: 4
+  pin_mem: true
+  crop_size: 32
+  crop_scale: [0.3, 1.0]
+  use_horizontal_flip: true
+  use_color_distortion: true
+  color_jitter_strength: 0.5
+  use_gaussian_blur: false
+
+mask:
+  patch_size: 4
+  # random mask doesn't need enc/pred scale or aspect
+  ratio: [0.4, 0.6]
+
+meta:
+  model_name: vit_small
+  pred_depth: 6
+  pred_emb_dim: 192
+  use_bfloat16: false
+  load_checkpoint: false
+  copy_data: false
+  read_checkpoint: null
+
+teacher:
+  # Path to the teacher model checkpoint
+  checkpoint_path: checkpoints/teacher/final_teacher.pth
+
+curriculum:
+  # Enable uncertainty-guided curriculum learning
+  enabled: true
+  # How often to compute uncertainty (every N iterations)
+  uncertainty_freq: 10
+  # Ratio of most difficult patches to focus on (0.5 = 50% most uncertain)
+  difficulty_ratio: 0.5
+  # Number of prediction samples for uncertainty estimation
+  num_uncertainty_samples: 3
+
+optimization:
+  epochs: 30
+  start_lr: 0.0004  # Lower learning rate for student
+  lr: 0.002        # Lower than teacher's learning rate
+  final_lr: 0.00004
+  warmup: 5         # Shorter warmup for student
+  weight_decay: 0.01
+  final_weight_decay: 0.01
+  ema: [0.99, 1.0]  # Not used for student (no target encoder)
+  ipe_scale: 1.0
+
+logging:
+  folder: ./logs/cifar10_vitsmall/student/
+  write_tag: student_curriculum
+  log_freq: 16
+  checkpoint_freq: 5
+
+seed: 42
